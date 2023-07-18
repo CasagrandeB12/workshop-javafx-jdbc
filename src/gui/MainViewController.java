@@ -38,7 +38,7 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemAboutAction() {
-		loadView("/gui/About.fxml");
+		loadView("/gui/About.fxml"); //carrega a tela instanciada
 	}
 	
 	@Override
@@ -46,6 +46,7 @@ public class MainViewController implements Initializable{
 	}
 	
 	//synchronized: evita que a tela pare de carregar
+	//absoluteName pois vai ser passado o nome completo
 	private synchronized void loadView (String absoluteName) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
@@ -55,7 +56,8 @@ public class MainViewController implements Initializable{
 			VBox mainVBox = (VBox)((ScrollPane) mainScene.getRoot()).getContent(); //referencia do vbox que esta na janela principal
 			
 			//carrega os filhos estaciados no About.fxml e limpa qualquer coisa que possa estar em tela
-			Node mainMenu = mainVBox.getChildren().get(0);
+			//"substitui os filhos da janela principal, mas mantem o menu"
+			Node mainMenu = mainVBox.getChildren().get(0);//posição zero por ser o primeiro filho
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
